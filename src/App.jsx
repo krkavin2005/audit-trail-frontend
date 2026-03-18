@@ -6,6 +6,8 @@ import DashboardLayout from './layout/DashboardLayout';
 import Document from './pages/Document';
 import ProtectedRoute from './components/ProtectedRoute';
 import Dashboard from './pages/Dashboard';
+import AuditPage from './pages/AuditPage';
+import Reports from './pages/Reports';
 
 function App() {
   return (
@@ -23,6 +25,20 @@ function App() {
           <ProtectedRoute>
             <DashboardLayout>
               <Document />
+            </DashboardLayout>
+          </ProtectedRoute>
+        } />
+        <Route path='/audit' element={
+          <ProtectedRoute>
+            <DashboardLayout>
+              <AuditPage />
+            </DashboardLayout>
+          </ProtectedRoute>
+        } />
+        <Route path='/reports' element={
+          <ProtectedRoute>
+            <DashboardLayout>
+              <Reports />
             </DashboardLayout>
           </ProtectedRoute>
         } />
