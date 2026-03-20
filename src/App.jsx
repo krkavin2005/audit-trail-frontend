@@ -8,6 +8,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import Dashboard from './pages/Dashboard';
 import AuditPage from './pages/AuditPage';
 import Reports from './pages/Reports';
+import Users from './pages/Users';
 
 function App() {
   return (
@@ -39,6 +40,13 @@ function App() {
           <ProtectedRoute>
             <DashboardLayout>
               <Reports />
+            </DashboardLayout>
+          </ProtectedRoute>
+        } />
+        <Route path='/users' element={
+          <ProtectedRoute>
+            <DashboardLayout>
+              <Users />
             </DashboardLayout>
           </ProtectedRoute>
         } />

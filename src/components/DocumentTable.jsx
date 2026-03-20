@@ -8,8 +8,6 @@ const statusColor ={
     ARCHIVED :"bg-slate-500/20 text-slate-400"
 };
 
-const options ={year :"numeric" , month:"long", day :"numeric"};
-
 const DocumentTable =(props)=>{
     const {documents , setSelectedDocument , handleView} = props;
     return(

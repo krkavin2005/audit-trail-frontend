@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { getHistory, transitionapi } from "../api/docApi";
 import { getUsers } from "../api/userApi";
+import Detail from "./Detail";
+import History from "./History";
 
 const DocumentDetail = (props) => {
     const { doc, closeModal, handleView } = props;
@@ -59,27 +61,7 @@ const DocumentDetail = (props) => {
                 </div>
                 {activeTab ==="detail"&&(
                     <>
-                <div className="space-y-3 text-slate-300 max-h-96 overflow-y-auto scrollbar-thin scrollbar-thumb-purple-600 scrollbar-track-slate-800">
-                    <p><b>{doc.originalName}</b></p>
-                    {Object.keys(doc).map((key) => {
-                        if (key !== "createdAt" && key !== "updatedAt" && key !== "escalatedAt" && key !== "uploadedBy" && key !== "assignedTo" && key !== "fileHash" && key !== "_id") {
-                            return (<p key={key}><b>{key.charAt(0).toUpperCase() + key.slice(1)}: </b>{typeof doc[key] === "boolean" ? doc[key].toString().toUpperCase() : doc[key]}</p>)
-                        }
-                        else if (key === "uploadedBy" || key === "assignedTo") {
-                            return (
-                                <>
-                                    <p><b>{key === "uploadedBy" ? "UploadedBy" : "AssignedTo"}: </b>{doc[key].username}</p>
-                                    <p><b>Email: </b>{doc[key].email}</p>
-                                </>
-                            )
-                        }
-                    })}
-                    {Object.keys(doc).map((key) => {
-                        if (key === "createdAt" || key === "updatedAt" || key === "escalatedAt") {
-                            return (<p key={key}><b>{key.charAt(0).toUpperCase() + key.slice(1)}: </b>{doc[key]}</p>)
-                        }
-                    })}
-                </div>
+                <Detail doc={doc} />
                 <div className="flex justify-center items-center mt-6">
                     <button onClick={(e) => handleView(e, doc)} className="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 to-indigo-500 px-4 py-2 rounded-lg text-white">View</button>
                 </div>
@@ -107,22 +89,7 @@ const DocumentDetail = (props) => {
                 </div>
                 </>)}
                 {activeTab ==="history"&&(
-                    <div className="max-h-96 overflow-y-auto space-y-4">
-                        {history.length === 0 && <p className="text-slate-400">No workflow history</p>}
-                        {history.map((event , index)=>(
-                            <div key={index} className="flex">
-                                <div className="w-2 h-2 bg-indigo-500 rounded-full mt-2"></div>
-                                    <div className="bg-slate-900/60 backdrop-blur p-4 rounded-lg border border-slate-800 w-full">
-                                        <p className="text-white font-medium">{event.fromState} → {event.toState}</p>
-                                        <p className="text-slate-400 text-sm">By {event.actedBy.username}</p>
-                                        {event.comment && (
-                                            <p className="text-slate-500 text-sm mt-1">Comment : {event.comment}</p>
-                                        )}
-                                        <p className="text-slate-500 text-xs mt-2">{new Date(event.createdAt).toLocaleString()}</p>
-                                    </div>
-                            </div>
-                        ))}
-                    </div>
+                    <History history={history} />
                 )}
             </div>
         </div>
