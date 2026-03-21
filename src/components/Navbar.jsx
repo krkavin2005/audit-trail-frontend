@@ -59,7 +59,7 @@ const Navbar =()=>{
     };
 
     return (
-        <div className="flex items-center justify-between px-6 py-10 border-b border-slate-800 bg-gradient-to-r from-grey-900 to-grey-800 backdrop-blur-xl">
+        <div className="flex items-center justify-between px-6 py-10 border-b border-slate-800 bg-gradient-to-r from-grey-900 to-grey-800 backdrop-blur-xl rounded-lg">
             <h2 className="text-3xl font-semibold text-white">Document Governance System & Audit Compliance</h2>
             <div className="flex items-center gap-4">
                 <div className="realtive">

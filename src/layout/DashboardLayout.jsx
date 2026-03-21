@@ -3,7 +3,7 @@ import Sidebar from "../components/Sidebar"
 
 const DashboardLayout = ({children})=>{
     return(
-        <div className="flex min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 shadow-2xl shadow-purple-900/30 text-slate-200">
+        <div className="flex min-h-175 bg-gradient-to-br from-gray-900 via-black to-gray-800 rounded-lg shadow-2xl shadow-purple-900/30 text-slate-200">
             <Sidebar />
             <div className="flex flex-col flex-1">
                 <Navbar />

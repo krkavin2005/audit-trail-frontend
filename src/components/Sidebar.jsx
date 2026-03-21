@@ -13,7 +13,7 @@ const Sidebar =()=>{
     ]
 
     return(
-        <div className="w-64 bg-slate-950 p-6 border-r border-slate-800 backdrop-blur-xl">
+        <div className="w-64 bg-slate-950 p-6 border-r border-slate-800 backdrop-blur-xl rounded-lg">
             <h1 className="text-xl font-bold mb-10 text-white">Governance</h1>
             <nav className="flex flex-col gap-4 text-slate-300">
                 {navItems.map((item)=>(
