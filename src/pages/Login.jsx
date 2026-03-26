@@ -24,13 +24,15 @@ const Login =()=>{
             console.log(res.data);
             setEmail("");
         setPassword("");
-        setLoading(false);
             navigate("/dashboard");
         }catch(err){
             if(!err.response) setWarning("Server not reachable");
             else if(err.response.status === 401) setWarning("Incorrect username or password");
             else setWarning("Something went wrong")
             console.error(err);
+        }
+        finally{
+            setLoading(false);
         }
     }
     

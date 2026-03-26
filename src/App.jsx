@@ -9,8 +9,18 @@ import Dashboard from './pages/Dashboard';
 import AuditPage from './pages/AuditPage';
 import Reports from './pages/Reports';
 import Users from './pages/Users';
+import { useState } from 'react';
+import { getDoc } from './api/docApi';
 
 function App() {
+  const [selectedDocument, setSelectedDocument] = useState(null);
+  const handleView = async (e, doc) => {
+        e.stopPropagation();
+        const res = await getDoc(doc.documentId);
+        const url = window.URL.createObjectURL(res.data);
+        window.open(url, "_blank");
+        window.URL.revokeObjectURL(url);
+    }
   return (
     <BrowserRouter>
       <Routes>
@@ -18,14 +28,14 @@ function App() {
         <Route path='/dashboard' element={
           <ProtectedRoute>
             <DashboardLayout>
-              <Dashboard />
+              <Dashboard selectedDocument={selectedDocument} setSelectedDocument={setSelectedDocument} handleView={handleView}/>
             </DashboardLayout>
           </ProtectedRoute>
         } />
         <Route path='/documents' element={
           <ProtectedRoute>
             <DashboardLayout>
-              <Document />
+              <Document selectedDocument={selectedDocument} setSelectedDocument={setSelectedDocument} handleView={handleView}/>
             </DashboardLayout>
           </ProtectedRoute>
         } />

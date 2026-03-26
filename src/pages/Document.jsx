@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import DocumentTable from "../components/DocumentTable"
-import { getDoc, getDocs } from "../api/docApi";
+import { getDocs } from "../api/docApi";
 import UploadModel from "../components/uploadModel";
 import DocumentDetail from "../components/DocumentDetail";
 
-const Document = () => {
+const Document = (props) => {
+    const {selectedDocument , setSelectedDocument , handleView}= props;
     const [documents, setDocuments] = useState([]);
     const [showUpload, setShowUpload] = useState(false);
-    const [selectedDocument, setSelectedDocument] = useState(null);
     useEffect(() => {
         const fetch = async () => {
             const res = await getDocs();
@@ -17,15 +17,6 @@ const Document = () => {
         };
         fetch();
     }, [])
-
-    const handleView = async (e, doc) => {
-        e.stopPropagation();
-        const res = await getDoc(doc.documentId);
-        const url = window.URL.createObjectURL(res.data);
-        window.open(url, "_blank");
-        window.URL.revokeObjectURL(url);
-    }
-
     return (
         <div>
             <div className="flex justify-around items-center mb-6 flex-">

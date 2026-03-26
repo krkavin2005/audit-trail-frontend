@@ -5,11 +5,10 @@ const Sidebar =()=>{
     const navItems =[
         {name :"Dasboard", path :"/dashboard"},
         {name :"Documents", path :"/documents"},
-        {name :"Upload", path :"/upload"},
-        {name :"Workflow", path :"/workflow"},
         {name :"Users", path :"/users"},
         {name :"Audit Logs", path :"/audit"},
         {name :"Reports", path :"/reports"},
+        {name :"My Profile", path :"/profile"}
     ]
 
     return(

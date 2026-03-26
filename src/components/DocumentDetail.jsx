@@ -17,9 +17,9 @@ const DocumentDetail = (props) => {
             return;
         }
         try {
-            await transitionapi(doc._id , toState , managerId);
+            await transitionapi(doc.documentId , toState , managerId);
             alert("Status updated");
-            closeModel();
+            closeModal();
         }catch(err){
             console.error(err)
                 alert(err.response?.data?.message);
@@ -30,7 +30,7 @@ const DocumentDetail = (props) => {
         const fetchManagers = async()=>{
             try{
                 const res = await getUsers();
-                const data = res.data.users.filter(user => user.role ==="MANAGER"|| user.role ==="ADMIN");                
+                const data = res.data.users.filter(user => user.role ==="MANAGER"|| user.role ==="ADMIN");
                 setManagers(data);
             }catch(err){
                 console.error(err);
