@@ -24,7 +24,7 @@ const Dashboard = (props) => {
         setDocuments(res.data.documents);
     };
     const fetchFilter = async () => {
-        const res = await getDocs(selectedCard);
+        const res = await getDocs({status : selectedCard});
         setDocuments(res.data.documents);
     }
 

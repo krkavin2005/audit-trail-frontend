@@ -28,7 +28,7 @@ const DocumentTable =(props)=>{
                         <td>
                             <span className={`px-3 py-1 text-xs rounded-full ${statusColor[doc.status]}`}>{doc.status}</span>
                         </td>
-                        <td>{doc.createdAt}</td>
+                        <td>{new Date(doc.createdAt).toLocaleString()}</td>
                         <td><button onClick={(e)=> handleView(e , doc)} className="text-indigo-400 hover:text-indigo-300">View</button></td>
                     </tr>
                 ))}
