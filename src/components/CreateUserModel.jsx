@@ -3,12 +3,11 @@ import { createUser } from "../api/userApi";
 
 const CreateUserModel =({close , refresh})=>{
     const [user , setUser]= useState({username:"",email:"",password:"",roleName:""});
-    console.log("hi");
     
 
     const handleSubmit = async()=>{
         try{
-            await createUser(from);
+            await createUser(user);
             refresh();
             close();
         }catch(err){

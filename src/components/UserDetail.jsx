@@ -7,14 +7,16 @@ const UserDetail = (props) => {
     const { closeModel, selectedUser, fetchUsers } = props;
     const [showUpdate, setShowUpdate] = useState(false);
 
-    const deactivateUser = async (userId) => {
-        await deactivate(userId);
+    const deactivateUser = async () => {
+        await deactivate(selectedUser.userId);
         fetchUsers();
+        closeModel();
     };
 
-    const reactivateUser = async (userId) => {
-        await reactivate(userId);
+    const reactivateUser = async () => {
+        await reactivate(selectedUser.userId);
         fetchUsers();
+        closeModel();
     };
 
     return (
@@ -26,13 +28,13 @@ const UserDetail = (props) => {
                         <button onClick={closeModel} className="text-slate-400 hover:text-white">X</button>
                     </div>
                     <Detail doc={selectedUser} />
-                    <div className="flex justify-around items-center mt-6">
-                        <button onClick={selectedUser.isActive ? deactivateUser : reactivateUser} className={`${selectedUser.isActive ? "bg-red-400" : "bg-green-400"} px-4 py-2 rounded-lg text-white`}>{selectedUser.isActive ? "Deactivate" : "Reactivate"}</button>
+                    <div className="flex justify-center items-center mt-6">
+                        <button onClick={selectedUser.isActive ? deactivateUser : reactivateUser} className={`${selectedUser.isActive ? "bg-red-400" : "bg-green-400"} px-4 py-2 rounded-lg text-white mr-5`}>{selectedUser.isActive ? "Deactivate" : "Reactivate"}</button>
                         <button onClick={() => setShowUpdate(true)} className="bg-green-400 px-4 py-2 rounded-lg text-white">Promote</button>
                     </div>
                 </div>
             </div>
-            {showUpdate && <RoleModal user={selectedUser} close={() => setShowUpdate(false)} refresh={fetchUsers} />}
+            {showUpdate && <RoleModal user={selectedUser} close={() => setShowUpdate(false)} refresh={fetchUsers} closeModel={closeModel}/>}
         </>
 
     )

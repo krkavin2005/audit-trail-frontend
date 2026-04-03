@@ -64,7 +64,7 @@ const Dashboard = (props) => {
                     <DocumentTable documents={documents} handleView={handleView} setSelectedDocument={setSelectedDocument} />
                 </div>
             }
-            {selectedDocument && (<DocumentDetail doc={selectedDocument} closeModal={() => setSelectedDocument(null)} handleView={handleView} />)}
+            {selectedDocument && (<DocumentDetail doc={selectedDocument} closeModal={() => setSelectedDocument(null)} handleView={handleView} fetch={fetchFilter} />)}
         </div>
 
     )

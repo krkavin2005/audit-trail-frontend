@@ -2,15 +2,15 @@ import { useState } from "react";
 import { promote } from "../api/userApi";
 
 const RoleModal =(props)=>{
-    const {user , close , refresh}= props;
+    const {user , close , refresh , closeModel}= props;
     const [role , setRole]= useState("");
 
     const handleUpdate = async()=>{
         try{
             if(!role) return;
-
             await promote(user.userId , role);
             refresh();
+            closeModel();
             close();
         }catch(err){
             console.error(err);
