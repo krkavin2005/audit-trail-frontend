@@ -11,16 +11,17 @@ import Reports from './pages/Reports';
 import Users from './pages/Users';
 import { useState } from 'react';
 import { getDoc } from './api/docApi';
+import Profile from './pages/Profile';
 
 function App() {
   const [selectedDocument, setSelectedDocument] = useState(null);
   const handleView = async (e, doc) => {
-        e.stopPropagation();
-        const res = await getDoc(doc.documentId);
-        const url = window.URL.createObjectURL(res.data);
-        window.open(url, "_blank");
-        window.URL.revokeObjectURL(url);
-    }
+    e.stopPropagation();
+    const res = await getDoc(doc.documentId);
+    const url = window.URL.createObjectURL(res.data);
+    window.open(url, "_blank");
+    window.URL.revokeObjectURL(url);
+  }
   return (
     <BrowserRouter>
       <Routes>
@@ -28,14 +29,14 @@ function App() {
         <Route path='/dashboard' element={
           <ProtectedRoute>
             <DashboardLayout>
-              <Dashboard selectedDocument={selectedDocument} setSelectedDocument={setSelectedDocument} handleView={handleView}/>
+              <Dashboard selectedDocument={selectedDocument} setSelectedDocument={setSelectedDocument} handleView={handleView} />
             </DashboardLayout>
           </ProtectedRoute>
         } />
         <Route path='/documents' element={
           <ProtectedRoute>
             <DashboardLayout>
-              <Document selectedDocument={selectedDocument} setSelectedDocument={setSelectedDocument} handleView={handleView}/>
+              <Document selectedDocument={selectedDocument} setSelectedDocument={setSelectedDocument} handleView={handleView} />
             </DashboardLayout>
           </ProtectedRoute>
         } />
@@ -60,6 +61,13 @@ function App() {
             </DashboardLayout>
           </ProtectedRoute>
         } />
+        {/* <Route path='/profile' element={
+          <ProtectedRoute>
+            <DashboardLayout>
+              <Profile />
+            </DashboardLayout>
+          </ProtectedRoute>
+        } /> */}
       </Routes>
     </BrowserRouter>
   )

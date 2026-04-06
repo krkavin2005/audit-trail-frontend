@@ -3,11 +3,13 @@ import Sidebar from "../components/Sidebar"
 
 const DashboardLayout = ({children})=>{
     return(
-        <div className="flex min-h-175 bg-gradient-to-br from-gray-900 via-black to-gray-800 rounded-lg shadow-2xl shadow-purple-900/30 text-slate-200">
+        <div className="flex min-h-screen bg-slate-950 text-slate-200 selection:bg-indigo-500/30">
             <Sidebar />
-            <div className="flex flex-col flex-1">
+            <div className="flex flex-col flex-1 h-screen overflow-hidden">
                 <Navbar />
-                <main className="p-6">{children}</main>
+                <main className="flex-1 p-8 overflow-y-auto bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-900 via-slate-950 to-black scrollbar-thin scrollbar-thumb-slate-800 scrollbar-track-transparent">
+                    {children}
+                </main>
             </div>
         </div>
     );

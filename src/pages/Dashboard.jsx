@@ -38,10 +38,25 @@ const Dashboard = (props) => {
 
     return (
         <div>
-            <div className="flex mb-4">
-                <h1 onClick={() => {setDisplay("dashboard"); setDocuments([])}} className={`text-2xl font-bold mb-6 mr-6 p-2 ${display === "dashboard" ? "text-white border-5 rounded-lg border-slate-400" : "text-slate-400 text-md"} cursor-pointer`}>Dashboard</h1>
-                <h1 onClick={() => {setDisplay("pending");setSelectedCard(null)}} className={`text-2xl font-bold mb-6 mr-6 p-2 ${display === "pending" ? "text-white border-5 rounded-lg" : "text-slate-400 text-md"} border-l border-slate-400 cursor-pointer`}>Pending</h1>
-                <h1 onClick={() => {setDisplay("submission");setSelectedCard(null)}} className={`text-2xl font-bold mb-6 mr-6 p-2 ${display === "submission" ? "text-white border-5 rounded-lg" : "text-slate-400 text-md"} border-l border-slate-400 cursor-pointer`}>My Submissions</h1>
+            <div className="flex gap-4 mb-8 bg-slate-900/50 p-1.5 rounded-xl w-fit border border-slate-800/60 backdrop-blur-sm">
+                <button 
+                    onClick={() => {setDisplay("dashboard"); setDocuments([])}} 
+                    className={`px-6 py-2.5 rounded-lg font-semibold transition-all duration-300 ${display === "dashboard" ? "bg-indigo-600 shadow-lg shadow-indigo-900/40 text-white" : "text-slate-400 hover:text-slate-200 hover:bg-slate-800/50"}`}
+                >
+                    Dashboard
+                </button>
+                <button 
+                    onClick={() => {setDisplay("pending");setSelectedCard(null)}} 
+                    className={`px-6 py-2.5 rounded-lg font-semibold transition-all duration-300 ${display === "pending" ? "bg-indigo-600 shadow-lg shadow-indigo-900/40 text-white" : "text-slate-400 hover:text-slate-200 hover:bg-slate-800/50"}`}
+                >
+                    Pending
+                </button>
+                <button 
+                    onClick={() => {setDisplay("submission");setSelectedCard(null)}} 
+                    className={`px-6 py-2.5 rounded-lg font-semibold transition-all duration-300 ${display === "submission" ? "bg-indigo-600 shadow-lg shadow-indigo-900/40 text-white" : "text-slate-400 hover:text-slate-200 hover:bg-slate-800/50"}`}
+                >
+                    My Submissions
+                </button>
             </div>
             {display === "dashboard" && !selectedCard && <div className="flex flex-wrap gap-15 justify-around">
                 {Object.keys(stats).map((key) => (

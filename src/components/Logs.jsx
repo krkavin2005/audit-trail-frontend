@@ -8,6 +8,8 @@ const Logs =()=>{
     useEffect(()=>{
         const fetchLogs = async()=>{
             const res = await getLogs();
+            console.log(res);
+            
             setLogs(res.data.logs);
         };
 
