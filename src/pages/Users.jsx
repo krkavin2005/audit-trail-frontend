@@ -2,15 +2,24 @@ import { useEffect, useState } from "react"
 import { deactivate, getUsers, reactivate } from "../api/userApi";
 import UserDetail from "../components/UserDetail";
 import CreateUserModel from "../components/CreateUserModel";
+import Loader from "../components/Loader";
 
 const Users =()=>{
     const [users , setUsers]= useState([]);
     const [showCreate , setShowCreate]= useState(false);
     const [selectedUser , setSelectedUser]= useState(null);
+    const [loading, setLoading] = useState(true);
 
     const fetchUsers = async()=>{
-        const res = await getUsers();
-        setUsers(res.data.users)
+        setLoading(true);
+        try {
+            const res = await getUsers();
+            setUsers(res.data.users)
+        } catch (err) {
+            console.error(err);
+        } finally {
+            setLoading(false);
+        }
     };
 
     useEffect(()=>{
@@ -27,26 +36,35 @@ const Users =()=>{
                 </button>
             </div>
             <div className="bg-slate-900/40 backdrop-blur-xl border border-slate-700/50 shadow-2xl rounded-2xl p-6 h-[28rem] overflow-y-auto scrollbar-thin scrollbar-thumb-slate-700">
-                <table className="w-full text-left">
-                    <thead className="border-b border-slate-800 text-slate-400 text-sm">
-                        <tr>
-                            <th className="py-3">Username</th>
-                            <th>Eamil</th>
-                            <th>Role</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {users.map((user)=>(
-                            <tr key={user.userId} onClick={()=> setSelectedUser(user)} className="border-b border-slate-800 hover:bg-slate-800/50 transition text-sm">
-                                <td className="py-3 text-white">{user.username}</td>
-                                <td>{user.email}</td>
-                                <td>{user.role}</td>
-                                <td><span className={user.isActive ? "text-green-400":"text-red-400"}>{user.isActive ?"Active":"Inactive"}</span></td>
+                {loading ? (
+                    <Loader message="Loading users..." />
+                ) : (
+                    <table className="w-full text-left">
+                        <thead className="border-b border-slate-800 text-slate-400 text-sm">
+                            <tr>
+                                <th className="py-3">Username</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Status</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {users.map((user)=>(
+                                <tr key={user.userId} onClick={()=> setSelectedUser(user)} className="border-b border-slate-800 hover:bg-slate-800/50 cursor-pointer transition text-sm">
+                                    <td className="py-3 text-white">{user.username}</td>
+                                    <td>{user.email}</td>
+                                    <td>{user.role}</td>
+                                    <td><span className={user.isActive ? "text-green-400":"text-red-400"}>{user.isActive ?"Active":"Inactive"}</span></td>
+                                </tr>
+                            ))}
+                            {users.length === 0 && (
+                                <tr>
+                                    <td colSpan="4" className="text-center py-6 text-slate-400">No users found.</td>
+                                </tr>
+                            )}
+                        </tbody>
+                    </table>
+                )}
             </div>
             {showCreate &&(
                 <CreateUserModel close ={()=> setShowCreate(false)} refresh ={()=> fetchUsers()} />

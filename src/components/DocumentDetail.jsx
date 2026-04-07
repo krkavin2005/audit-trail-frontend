@@ -19,7 +19,7 @@ const DocumentDetail = (props) => {
             return;
         }
         try {
-            await transitionapi(doc.documentId, toState, managerId , comment);
+            await transitionapi(doc.documentId, toState, managerId, comment);
             alert("Status updated");
             fetch();
             closeModal();
@@ -29,9 +29,9 @@ const DocumentDetail = (props) => {
         }
     }
 
-    const handleReject =()=>{
+    const handleReject = () => {
         setAsk(!ask);
-        if(ask) transition("REJECTED");
+        if (ask) transition("REJECTED");
     };
 
     useEffect(() => {
@@ -41,7 +41,7 @@ const DocumentDetail = (props) => {
                 const data = res.data.users.filter(user => user.role === "MANAGER" || user.role === "ADMIN");
                 setManagers(data);
             } catch (err) {
-                console.error(err);
+                console.error(err.message);
             }
         }
         const fetchHistory = async () => {
@@ -91,7 +91,7 @@ const DocumentDetail = (props) => {
                             )}
                             {doc.status === "SUBMITTED" && (
                                 <div>
-                                    {ask && <input type="text" value={comment} placeholder="Enter comment" onChange={(e)=> setComment(e.target.value)} className="w-full p-3 mb-4 rounded-lg bg-black/40 border border-gray-600 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500" />}
+                                    {ask && <input type="text" value={comment} placeholder="Enter comment" onChange={(e) => setComment(e.target.value)} className="w-full p-3 mb-4 rounded-lg bg-black/40 border border-gray-600 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500" />}
                                     {!ask && <button className="bg-green-500/20 text-green-400 px-4 py-2 rounded-lg mr-5" onClick={() => transition("APPROVED")}>Approve</button>}
                                     <button className="bg-red-500/20 text-red-400 px-4 py-2 rounded-lg" onClick={() => handleReject()}>Reject</button>
                                 </div>

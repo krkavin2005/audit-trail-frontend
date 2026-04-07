@@ -3,11 +3,13 @@ import DocumentTable from "../components/DocumentTable"
 import { getDocs } from "../api/docApi";
 import UploadModel from "../components/UploadModel";
 import DocumentDetail from "../components/DocumentDetail";
+import Loader from "../components/Loader";
 
 const Document = (props) => {
     const { selectedDocument, setSelectedDocument, handleView } = props;
     const [documents, setDocuments] = useState([]);
     const [showUpload, setShowUpload] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [filters, setFilters] = useState({ status: "", uploadedBy: "", mimeType: "", from: "", to: "", search: "" });
     const types = [
         ["application/pdf", "PDF"],
@@ -18,10 +20,16 @@ const Document = (props) => {
         ["application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "XLSX"],
         ["application/vnd.ms-exel", "XLS"]
     ];
+    
     const fetch = async (custom = filters) => {
-        const res = await getDocs(custom);
-        setDocuments(res.data.documents);
+        setLoading(true);
+        try {
+            const res = await getDocs(custom);
+            setDocuments(res.data.documents);
+        } catch (err) { console.error(err); }
+        setLoading(false);
     };
+
     const updateFilter = (key, value) => {
         const updated = { ...filters, [key]: value };
         setFilters(updated);
@@ -29,11 +37,12 @@ const Document = (props) => {
     }
     const handleReset = () => {
         setFilters({ status: "", uploadedBy: "", mimeType: "", from: "", to: "", search: "" });
-        fetch({});
+        fetch({ status: "", uploadedBy: "", mimeType: "", from: "", to: "", search: "" });
     }
     useEffect(() => {
         fetch();
     }, [])
+    
     return (
         <div>
             <div className="flex justify-between items-center mb-8 border-b border-slate-800/80 pb-4">
@@ -72,8 +81,12 @@ const Document = (props) => {
                     <button onClick={() => handleReset()} className="w-full bg-slate-800 hover:bg-slate-700 text-slate-300 px-4 py-3 rounded-lg border border-slate-700 hover:border-slate-500 transition-all font-semibold">Reset Filters</button>
                 </div>
             </div>
-            <div className="bg-slate-900/40 backdrop-blur-xl border border-slate-700/50 shadow-2xl rounded-2xl p-6 h-[28rem] overflow-y-auto scrollbar-thin scrollbar-thumb-slate-700">
-                <DocumentTable documents={documents} handleView={handleView} setSelectedDocument={setSelectedDocument} />
+            <div className="bg-slate-900/40 backdrop-blur-xl border border-slate-700/50 shadow-2xl rounded-2xl p-6 h-[28rem] overflow-y-auto scrollbar-thin scrollbar-thumb-slate-700 mt-6 relative">
+                {loading ? (
+                    <Loader message="Fetching documents..." />
+                ) : (
+                    <DocumentTable documents={documents} handleView={handleView} setSelectedDocument={setSelectedDocument} />
+                )}
             </div>
             {showUpload && (<UploadModel closeModel={() => setShowUpload(false)} fetch={fetch}/>)}
             {selectedDocument && (<DocumentDetail doc={selectedDocument} closeModal={() => setSelectedDocument(null)} handleView={handleView} fetch={fetch}/>)}
