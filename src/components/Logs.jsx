@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import { getLogs } from "../api/auditApi";
 import Loader from "./Loader";
 
-const Logs =()=>{
+const Logs = () => {
     const [logs, setLogs] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    useEffect(()=>{
-        const fetchLogs = async()=>{
+    useEffect(() => {
+        const fetchLogs = async () => {
             setLoading(true);
             try {
                 const res = await getLogs();
@@ -21,9 +21,9 @@ const Logs =()=>{
         };
 
         fetchLogs();
-    },[]);
+    }, []);
 
-    return(
+    return (
         <div className="bg-slate-900/40 backdrop-blur-xl border border-slate-700/50 shadow-2xl rounded-2xl p-6 h-[28rem] overflow-y-auto scrollbar-thin scrollbar-thumb-slate-700">
             {loading ? (
                 <Loader message="Fetching audit logs..." />
@@ -38,7 +38,7 @@ const Logs =()=>{
                         </tr>
                     </thead>
                     <tbody>
-                        {logs.map((log)=>(
+                        {logs.map((log) => (
                             <tr key={log.eventId} className="border-b border-slate-800 hover:bg-slate-800/50 transition text-sm">
                                 <td className="py-3 text-white">{log.actor}</td>
                                 <td>{log.action}</td>

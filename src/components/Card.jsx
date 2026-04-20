@@ -1,6 +1,6 @@
-const Card = ({ stats, val , setSelectedCard}) => {
-    const handleSelect = ()=>{
-        if(stats[val]=== 0) return;
+const Card = ({ stats, val, setSelectedCard }) => {
+    const handleSelect = () => {
+        if (stats[val] === 0) return;
         setSelectedCard(val);
     }
     return (
